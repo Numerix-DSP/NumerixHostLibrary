@@ -1,0 +1,2 @@
+# NumerixHostLibrary
+A library of host I/O routines, including full source code. Functions include console and File I/O, including .WAV files. These functions can be used on any OS (UNIX, Windows etc.) and also on any other embedded processor or DSP that supports console and file I/O via the debug environment. These functions can also be used with Gnuplot/C to run any of the SigLib example programs.
