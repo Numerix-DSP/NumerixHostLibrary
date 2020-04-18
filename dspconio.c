@@ -32,7 +32,7 @@ Description : Display a buffer on the screen using standard text based I/O.
 *
 * Parameters :
 *   const double *ptr
-*   const short size
+*   const int size
 *
 * Return value :
 *   void
@@ -42,17 +42,46 @@ Description : Display a buffer on the screen using standard text based I/O.
 ********************************************************/
 
 void print_buffer (const double *ptr,
-                const int size)
+                   const int size)
 
 {
-    register short  i;
+    register int  i;
 
-    for (i = 0; i < (short)size; i++) {
+    for (i = 0; i < (int)size; i++) {
         printf ("Buffer Location : %d, Value : %le   \n", i, *ptr++);
 
-#if COMMENT                                         // Un-comment to display one sample at a time
-        getch();
-#endif
+//        getch();                                    // Un-comment to display one sample at a time
+    }
+
+}       // End of print_buffer()
+
+
+
+/**/
+/********************************************************
+* Function : print_fixed_point_buffer
+*
+* Parameters :
+*   const int *ptr
+*   const int size
+*
+* Return value :
+*   void
+*
+* Description : Print out all values in a fixed point buffer
+*
+********************************************************/
+
+void print_fixed_point_buffer (const int *ptr,
+                               const int size)
+
+{
+    register int  i;
+
+    for (i = 0; i < (int)size; i++) {
+        printf ("Buffer Location : %d, Value : %d   \n", i, *ptr++);
+
+//        getch();                                    // Un-comment to display one sample at a time
     }
 
 }       // End of print_buffer()
@@ -65,8 +94,8 @@ void print_buffer (const double *ptr,
 *
 * Parameters :
 *   const double *pSrc
-*   const short NRows       - Number of rows
-*   const short NCols       - Number of columns
+*   const int NRows       - Number of rows
+*   const int NCols       - Number of columns
 *
 * Return value :
 *   void
@@ -80,10 +109,10 @@ void print_matrix (const double *pSrc,
     const int NCols)
 
 {
-    register short  i, j;
+    register int  i, j;
 
-    for (i = 0; i < (short)NRows; i++) {
-        for (j = 0; j < (short)NCols; j++) {
+    for (i = 0; i < (int)NRows; i++) {
+        for (j = 0; j < (int)NCols; j++) {
             printf ("%le, ", *pSrc++);
         }
         printf ("\n");

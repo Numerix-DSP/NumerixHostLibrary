@@ -31,14 +31,15 @@ extern "C"
 
 
                     // Functions for writing to the console
-void print_buffer (const double *, const int);              // Print contents of a buffer
-void print_matrix (const double *, const int, const int);   // Display a 2D matrix
+void print_buffer (const double *, const int);                  // Print contents of a buffer
+void print_fixed_point_buffer (const int *ptr, const int size); // Print contents of a fixed point buffer
+void print_matrix (const double *, const int, const int);       // Display a 2D matrix
 #define print_polar(V)  printf("P = %le < %le\n", V.magn, V.angle);
 #define print_rectangular(V)    printf("C = %le, j%le\n", V.real, V.imag)
 
 
                     // Functions for reading and writing .bin files
-int     bin_read_data (double *, FILE *, const char, const int);           // double data
+int     bin_read_data (double *, FILE *, const char, const int);    // double data
 void    bin_write_data (const double *, FILE *, const char, const int);
 
                     // Functions for reading and writing .csv files
@@ -56,6 +57,8 @@ int     dat_write_header (FILE *, const double);
                     // Functions for reading and writing .sig files
 int     sig_read_data (double *, FILE *, const int);           // double data
 void    sig_write_data (const double *, FILE *, const int);
+int     sig_read_file (double *, const char *);
+int     sig_write_file (const double *, char *, const int);
 
 int     xmt_read_data (double *BPtr, FILE *FPtr, const long BufLen);
 

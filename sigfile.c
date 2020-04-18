@@ -94,3 +94,72 @@ int sig_read_data (double *bp,
     return (sample_count);
 }       // End of sig_read_data ()
 
+
+/**/
+/********************************************************
+* Function : sig_read_file
+*
+* Parameters :
+*   double *BPtr,          - Output buffer pointer
+*   const char *fileName   - File name
+*
+* Return value :
+*   int    sample_count    - Number of samples read, -1 for file open error
+*
+* Description : Return the number of samples in the .sig file
+*
+********************************************************/
+
+int sig_read_file (double *BPtr,
+    const char *fileName)
+{
+    FILE *fp;
+    int sample_count = 0;
+
+    if ((fp = fopen(fileName, "rb")) == NULL) {
+        return (-1);
+    }
+
+    while (fscanf (fp, "%le\n", BPtr) != EOF) {
+        BPtr++;
+        sample_count++;
+    }
+
+    fclose (fp);
+    return (sample_count);
+}
+
+
+/**/
+/********************************************************
+* Function : sig_write_file
+*
+* Parameters :
+*   double *BPtr,           - Output buffer pointer
+*   const char *fileName,   - File name
+*   const int BufLen
+*
+* Return value :
+*   int                     - Number of samples written, -1 for file open error
+*
+* Description : Write the array to a .wav file
+*
+********************************************************/
+
+int sig_write_file (const double *BPtr,
+    char *fileName,
+    const int BufLen)
+{
+    FILE *fp;
+
+    if ((fp = fopen(fileName, "wb")) == NULL) {
+        return (-1);
+    }
+
+    sig_write_data (BPtr, fp, BufLen);
+
+    fclose (fp);
+
+    return (BufLen);
+}
+
