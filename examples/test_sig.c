@@ -12,34 +12,34 @@
 
 // Declare global variables and arrays
 double          inputData[SAMPLE_LENGTH];           // Data array pointers
-double          srcData[SAMPLE_LENGTH] = {10, 11, 12, 13, 14, 15, 16, 17, 18, 19};
+double          srcData[SAMPLE_LENGTH] = {10., 11., 12., 13., 14., 15., 16., 17., 18., 19.};
 
 int main (void)
 
 {
-    int     SampleCount;
+    int     sampleCount;
     FILE    *fpInputFile, *fpOutputFile;
 
-    printf ("Opening and writing to test.sig file\n");
+    printf ("Opening and writing to test_file.sig file\n");
 
-    if ((fpOutputFile = fopen ("test.sig", "wb")) == NULL) {    // Note this file is binary
+    if ((fpOutputFile = fopen ("test_file.sig", "wb")) == NULL) {   // Note this file is binary
         printf ("Error opening output .sig file\n");
         exit (1);
     }
 
-    sig_write_data (srcData, fpOutputFile, IO_LENGTH);          // Write successive blocks of data
+    sig_write_data (srcData, fpOutputFile, IO_LENGTH);              // Write successive blocks of data
     sig_write_data (srcData+IO_LENGTH, fpOutputFile, IO_LENGTH);
     fclose (fpOutputFile);
 
-    printf ("Opening and reading from test.sig file\n");
+    printf ("Opening and reading from test_file.sig file\n");
 
-    if ((fpInputFile = fopen ("test.sig", "rb")) == NULL) {     // Note this file is binary
+    if ((fpInputFile = fopen ("test_file.sig", "rb")) == NULL) {    // Note this file is binary
         printf ("Error opening input .sig file\n");
         exit (1);
     }
 
-    while ((SampleCount = (int)sig_read_data (inputData, fpInputFile, IO_LENGTH)) == IO_LENGTH) {
-        for (int i = 0; i < SampleCount; i++)
+    while ((sampleCount = (int)sig_read_data (inputData, fpInputFile, IO_LENGTH)) == IO_LENGTH) {
+        for (int i = 0; i < sampleCount; i++)
             printf ("%lf, ", inputData[i]);
     }
 

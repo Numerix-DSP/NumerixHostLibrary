@@ -50,7 +50,7 @@ void wav_write_long (const int LongWord, FILE *FPtr);
 * Function : wav_read_data
 *
 * Parameters :
-*   double *BPtr,                   - Output buffer pointer
+*   double *pData,                   - Output buffer pointer
 *   FILE *FPtr,                     - File pointer
 *   const WAV_FILE_INFO WavInfo,    - WAV file info struct
 *   const int BufLen
@@ -63,7 +63,7 @@ void wav_write_long (const int LongWord, FILE *FPtr);
 *
 ********************************************************/
 
-int wav_read_data (double *BPtr,
+int wav_read_data (double *pData,
     FILE *FPtr,
     const WAV_FILE_INFO WavInfo,
     const int BufLen)
@@ -80,11 +80,11 @@ int wav_read_data (double *BPtr,
             Word = (int) wav_read_long (FPtr);
 
             if (feof (FPtr)) {                      // Check end of file error
-                *BPtr++ = 0.0;
+                *pData++ = 0.0;
             }
 
             else {
-                *BPtr++ = (double) Word;
+                *pData++ = (double) Word;
                 SampleCount++;
             }
         }
@@ -93,11 +93,11 @@ int wav_read_data (double *BPtr,
             Word = (int) wav_read_word (FPtr);
 
             if (feof (FPtr)) {                      // Check end of file error
-                *BPtr++ = 0.0;
+                *pData++ = 0.0;
             }
 
             else {
-                *BPtr++ = (double) Word;
+                *pData++ = (double) Word;
                 SampleCount++;
             }
         }
@@ -106,11 +106,11 @@ int wav_read_data (double *BPtr,
             Char = (unsigned char)getc (FPtr);
 
             if (feof (FPtr)) {                      // Check end of file error
-                *BPtr++ = 0.0;
+                *pData++ = 0.0;
             }
 
             else {
-                *BPtr++ = ((double) Char) - 128.0;
+                *pData++ = ((double) Char) - 128.0;
                 SampleCount++;
             }
         }
@@ -134,7 +134,7 @@ int wav_read_data (double *BPtr,
 * Function : wav_write_data
 *
 * Parameters :
-*   const double *BPtr,             - Buffer pointer
+*   const double *pData,             - Buffer pointer
 *   FILE *FPtr,                     - File pointer
 *   const WAV_FILE_INFO WavInfo,    - WAV file info struct
 *   const int BufLen
@@ -146,7 +146,7 @@ int wav_read_data (double *BPtr,
 *
 ********************************************************/
 
-void wav_write_data (const double *BPtr,
+void wav_write_data (const double *pData,
     FILE *FPtr,
     const WAV_FILE_INFO WavInfo,
     const int BufLen)
@@ -156,15 +156,15 @@ void wav_write_data (const double *BPtr,
 
     for(i = 0; i < BufLen; i++) {                   // Write the data
         if (WavInfo.WordLength == 32) {             // Write 32 bit data
-            wav_write_long ((int)*(BPtr + i), FPtr);
+            wav_write_long ((int)*(pData + i), FPtr);
         }
 
         else if (WavInfo.WordLength == 16) {        // Write 16 bit data
-            wav_write_word ((short)*(BPtr + i), FPtr);
+            wav_write_word ((short)*(pData + i), FPtr);
         }
 
         else if (WavInfo.WordLength == 8) {         // Write 8 bit data
-            putc (((short)(*(BPtr + i) + 128.0)) & 0x0ff, FPtr);
+            putc (((short)(*(pData + i) + 128.0)) & 0x0ff, FPtr);
         }
 
         else {
@@ -181,7 +181,7 @@ void wav_write_data (const double *BPtr,
 * Function : wav_read_data16
 *
 * Parameters :
-*   double *BPtr,                   - Output buffer pointer
+*   double *pData,                   - Output buffer pointer
 *   FILE *FPtr,                     - File pointer
 *   const WAV_FILE_INFO WavInfo,    - WAV file info struct
 *   const int BufLen
@@ -194,7 +194,7 @@ void wav_write_data (const double *BPtr,
 *
 ********************************************************/
 
-int wav_read_data16 (short *BPtr,
+int wav_read_data16 (short *pData,
     FILE *FPtr,
     const WAV_FILE_INFO WavInfo,
     const int BufLen)
@@ -211,11 +211,11 @@ int wav_read_data16 (short *BPtr,
             Word = wav_read_word (FPtr);
 
             if (feof (FPtr)) {                      // Check end of file error
-                *BPtr++ = (short) 0;
+                *pData++ = (short) 0;
             }
 
             else {
-                *BPtr++ = (short) Word;
+                *pData++ = (short) Word;
                 SampleCount++;
             }
         }
@@ -224,11 +224,11 @@ int wav_read_data16 (short *BPtr,
             Char = (char)getc (FPtr);
 
             if (feof (FPtr)) {                      // Check end of file error
-                *BPtr++ = (short) 0;
+                *pData++ = (short) 0;
             }
 
             else {
-                *BPtr++ = (short) Char;
+                *pData++ = (short) Char;
                 SampleCount++;
             }
         }
@@ -252,7 +252,7 @@ int wav_read_data16 (short *BPtr,
 * Function : wav_write_data16
 *
 * Parameters :
-*   const double *BPtr,             - Buffer pointer
+*   const double *pData,             - Buffer pointer
 *   FILE *FPtr,                     - File pointer
 *   const WAV_FILE_INFO WavInfo,    - WAV file info struct
 *   const int BufLen
@@ -264,7 +264,7 @@ int wav_read_data16 (short *BPtr,
 *
 ********************************************************/
 
-void wav_write_data16 (const short *BPtr,
+void wav_write_data16 (const short *pData,
     FILE *FPtr,
     const WAV_FILE_INFO WavInfo,
     const int BufLen)
@@ -274,11 +274,11 @@ void wav_write_data16 (const short *BPtr,
 
     for(i = 0; i < BufLen; i++) {                   // Write the data
         if (WavInfo.WordLength == 16) {             // Write 16 bit data
-            wav_write_word ((short)*(BPtr + i), FPtr);
+            wav_write_word ((short)*(pData + i), FPtr);
         }
 
         else if (WavInfo.WordLength == 8) {         // Write 8 bit data
-            putc (((short)*(BPtr + i)) & 0x0ff, FPtr);
+            putc (((short)*(pData + i)) & 0x0ff, FPtr);
         }
 
         else {
@@ -295,7 +295,7 @@ void wav_write_data16 (const short *BPtr,
 * Function : wav_read_data32
 *
 * Parameters :
-*   double *BPtr,                   - Output buffer pointer
+*   double *pData,                   - Output buffer pointer
 *   FILE *FPtr,                     - File pointer
 *   const WAV_FILE_INFO WavInfo,    - WAV file info struct
 *   const int BufLen
@@ -308,7 +308,7 @@ void wav_write_data16 (const short *BPtr,
 *
 ********************************************************/
 
-int wav_read_data32 (int *BPtr,
+int wav_read_data32 (int *pData,
     FILE *FPtr,
     const WAV_FILE_INFO WavInfo,
     const int BufLen)
@@ -325,11 +325,11 @@ int wav_read_data32 (int *BPtr,
             Word = wav_read_word (FPtr);
 
             if (feof (FPtr)) {                      // Check end of file error
-                *BPtr++ = (int) 0;
+                *pData++ = (int) 0;
             }
 
             else {
-                *BPtr++ = (int) Word;
+                *pData++ = (int) Word;
                 SampleCount++;
             }
         }
@@ -338,11 +338,11 @@ int wav_read_data32 (int *BPtr,
             Char = (char)getc (FPtr);
 
             if (feof (FPtr)) {                      // Check end of file error
-                *BPtr++ = (int) 0;
+                *pData++ = (int) 0;
             }
 
             else {
-                *BPtr++ = (int) Char;
+                *pData++ = (int) Char;
                 SampleCount++;
             }
         }
@@ -366,7 +366,7 @@ int wav_read_data32 (int *BPtr,
 * Function : wav_write_data32
 *
 * Parameters :
-*   const double *BPtr,             - Buffer pointer
+*   const double *pData,             - Buffer pointer
 *   FILE *FPtr,                     - File pointer
 *   const WAV_FILE_INFO WavInfo,    - WAV file info struct
 *   const int BufLen
@@ -378,7 +378,7 @@ int wav_read_data32 (int *BPtr,
 *
 ********************************************************/
 
-void wav_write_data32 (const int *BPtr,
+void wav_write_data32 (const int *pData,
     FILE *FPtr,
     const WAV_FILE_INFO WavInfo,
     const int BufLen)
@@ -388,11 +388,11 @@ void wav_write_data32 (const int *BPtr,
 
     for(i = 0; i < BufLen; i++) {                   // Write the data
         if (WavInfo.WordLength == 16) {             // Write 16 bit data
-            wav_write_word ((short)*(BPtr + i), FPtr);
+            wav_write_word ((short)*(pData + i), FPtr);
         }
 
         else if (WavInfo.WordLength == 8) {         // Write 8 bit data
-            putc (((short)*(BPtr + i)) & 0x0ff, FPtr);
+            putc (((short)*(pData + i)) & 0x0ff, FPtr);
         }
 
         else {
@@ -796,7 +796,7 @@ int wav_file_length (const char *fileName)
 * Function : wav_read_file
 *
 * Parameters :
-*   double *BPtr,                   - Output buffer pointer
+*   double *pData,                   - Output buffer pointer
 *   const char *fileName            - File name
 *
 * Return value :
@@ -806,7 +806,7 @@ int wav_file_length (const char *fileName)
 *
 ********************************************************/
 
-WAV_FILE_INFO wav_read_file (double *BPtr,
+WAV_FILE_INFO wav_read_file (double *pData,
     const char *fileName)
 {
     FILE *fp;
@@ -820,7 +820,7 @@ WAV_FILE_INFO wav_read_file (double *BPtr,
 
     WavInfo = wav_read_header (fp);
 
-    int num_samples = wav_read_data (BPtr, fp, WavInfo, WavInfo.NumberOfSamples);
+    int num_samples = wav_read_data (pData, fp, WavInfo, WavInfo.NumberOfSamples);
     if (num_samples == -1) {                        // Check how many channels
         WavInfo.NumberOfSamples = -1;
     }
@@ -835,7 +835,7 @@ WAV_FILE_INFO wav_read_file (double *BPtr,
 * Function : wav_write_file
 *
 * Parameters :
-*   double *BPtr,                   - Output buffer pointer
+*   double *pData,                  - Output buffer pointer
 *   const char *fileName,           - File name
 *   const WAV_FILE_INFO WavInfo,    - WAV file info struct
 *   const int BufLen
@@ -847,8 +847,8 @@ WAV_FILE_INFO wav_read_file (double *BPtr,
 *
 ********************************************************/
 
-int wav_write_file (const double *BPtr,
-    char *fileName,
+int wav_write_file (const double *pData,
+    const char *fileName,
     const WAV_FILE_INFO WavInfo,
     const int BufLen)
 {
@@ -869,7 +869,7 @@ int wav_write_file (const double *BPtr,
 
     wav_write_header (fp, tmpWavInfo);
 
-    wav_write_data (BPtr, fp, tmpWavInfo, BufLen);
+    wav_write_data (pData, fp, tmpWavInfo, BufLen);
 
     fclose (fp);
 
@@ -882,7 +882,7 @@ int wav_write_file (const double *BPtr,
 * Function : wav_write_file_scaled
 *
 * Parameters :
-*   double *BPtr,                   - Output buffer pointer
+*   double *pData,                   - Output buffer pointer
 *   const char *fileName,           - File name
 *   const WAV_FILE_INFO WavInfo,    - WAV file info struct
 *   const int BufLen
@@ -895,15 +895,15 @@ int wav_write_file (const double *BPtr,
 *
 ********************************************************/
 
-int wav_write_file_scaled (const double *BPtr,
+int wav_write_file_scaled (const double *pData,
     char *fileName,
     const WAV_FILE_INFO WavInfo,
     const int BufLen)
 {
     FILE *fp;
-    double *tmpBPtr = malloc (BufLen * sizeof (double));
+    double *tmppData = malloc (BufLen * sizeof (double));
 
-    if (tmpBPtr == NULL) {
+    if (tmppData == NULL) {
         return (-1);
     }
 
@@ -919,20 +919,20 @@ int wav_write_file_scaled (const double *BPtr,
 
     double Max = 0.0;
     for (int i = 0; i < BufLen; i++) {
-        if (BPtr[i] >= 0.0) {
-            if (BPtr[i] > Max) {
-                Max = BPtr[i];
+        if (pData[i] >= 0.0) {
+            if (pData[i] > Max) {
+                Max = pData[i];
             }
         }
         else {
-            if (-BPtr[i] > Max) {
-                Max = -BPtr[i];
+            if (-pData[i] > Max) {
+                Max = -pData[i];
             }
         }
     }
 
     for (int i = 0; i < BufLen; i++) {
-        tmpBPtr[i] = BPtr[i] * 32767. / Max;
+        tmppData[i] = pData[i] * 32767. / Max;
     }
 
     if ((fp = fopen(fileName, "wb")) == NULL) {
@@ -941,9 +941,9 @@ int wav_write_file_scaled (const double *BPtr,
 
     wav_write_header (fp, tmpWavInfo);
 
-    wav_write_data (tmpBPtr, fp, tmpWavInfo, BufLen);
+    wav_write_data (tmppData, fp, tmpWavInfo, BufLen);
 
-    free (tmpBPtr);
+    free (tmppData);
     fclose (fp);
 
     return (BufLen);

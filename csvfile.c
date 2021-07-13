@@ -31,7 +31,7 @@ Columns
 * Function : csv_read_data
 *
 * Parameters :
-*   double *BPtr,               - Output buffer pointer
+*   double *pData,               - Output buffer pointer
 *   FILE *FPtr,                 - File pointer
 *   const double sampleRate,    - Sample rate
 *   const int BufLen
@@ -44,7 +44,7 @@ Columns
 *
 ********************************************************/
 
-int csv_read_data (double *BPtr,
+int csv_read_data (double *pData,
     FILE *FPtr,
     const double sampleRate,
     const int BufLen)
@@ -55,14 +55,14 @@ int csv_read_data (double *BPtr,
     double  sample;
     double  samplePeriod = 1. / sampleRate;
 
-    for(i = 0; i < BufLen; i++) {                   // Write the data
+    for(i = 0; i < BufLen; i++) {       // Write the data
         fscanf(FPtr, "%lf,%lf\n", &samplePeriod, &sample);
-        if (feof (FPtr)) {                          // Check end of file error
+        if (feof (FPtr)) {              // Check end of file error
             return (SampleCount);
         }
 
         else {
-            *BPtr++ = sample;
+            *pData++ = sample;
             SampleCount++;
         }
     }
@@ -79,7 +79,7 @@ int csv_read_data (double *BPtr,
 * Function : csv_write_data
 *
 * Parameters :
-*   const double *BPtr,         - Buffer pointer
+*   const double *pData,         - Buffer pointer
 *   FILE *FPtr,                 - File pointer
 *   const double sampleRate,    - Sample rate
 *   const double sampleIndex,   - Sample index
@@ -92,7 +92,7 @@ int csv_read_data (double *BPtr,
 *
 ********************************************************/
 
-int csv_write_data (const double *BPtr,
+int csv_write_data (const double *pData,
     FILE *FPtr,
     const double sampleRate,
     const int sampleIndex,
@@ -102,8 +102,8 @@ int csv_write_data (const double *BPtr,
     int    i;
     double samplePeriod = 1. / sampleRate;
 
-    for(i = 0; i < BufLen; i++) {                   // Write the data
-        fprintf(FPtr, "%1.7lf,%lf\n", ((double)(sampleIndex + i))*samplePeriod, BPtr[i]);
+    for(i = 0; i < BufLen; i++) {   // Write the data
+        fprintf(FPtr, "%1.7lf,%lf\n", ((double)(sampleIndex + i))*samplePeriod, pData[i]);
     }
 
     return (i);

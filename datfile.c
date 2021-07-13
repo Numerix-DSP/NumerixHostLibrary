@@ -36,7 +36,7 @@ Columns
 * Function : dat_read_data
 *
 * Parameters :
-*   double *BPtr,               - Output buffer pointer
+*   double *pData,               - Output buffer pointer
 *   FILE *FPtr,                 - File pointer
 *   const int BufLen
 *
@@ -48,7 +48,7 @@ Columns
 *
 ********************************************************/
 
-int dat_read_data (double *BPtr,
+int dat_read_data (double *pData,
     FILE *FPtr,
     const int BufLen)
 
@@ -67,7 +67,7 @@ int dat_read_data (double *BPtr,
 
         else {
 //          printf("sample = %lf\n", sample);
-            *BPtr++ = sample;
+            *pData++ = sample;
             SampleCount++;
         }
     }
@@ -82,7 +82,7 @@ int dat_read_data (double *BPtr,
 * Function : dat_write_data
 *
 * Parameters :
-*   const double *BPtr,         - Buffer pointer
+*   const double *pData,         - Buffer pointer
 *   FILE *FPtr,                 - File pointer
 *   const double sampleRate,    - Sample rate
 *   const int sampleIndex,      - Sample index
@@ -95,7 +95,7 @@ int dat_read_data (double *BPtr,
 *
 ********************************************************/
 
-int dat_write_data (const double *BPtr,
+int dat_write_data (const double *pData,
     FILE *FPtr,
     const double sampleRate,
     const int sampleIndex,
@@ -106,7 +106,7 @@ int dat_write_data (const double *BPtr,
     double samplePeriod = 1. / sampleRate;
 
     for(i = 0; i < BufLen; i++) {                   // Write the data
-        fprintf(FPtr, " %1.7lf %lf\n", ((double)(sampleIndex + i))*samplePeriod, BPtr[i]);
+        fprintf(FPtr, " %1.7lf %lf\n", ((double)(sampleIndex + i))*samplePeriod, pData[i]);
     }
 
     return (i);

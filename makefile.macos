@@ -5,7 +5,7 @@
 LIB1=nhl
 
 # object file list which makes up the library
-OBJS1=binfile.o csvfile.o datfile.o dspconio.o sigfile.o wavfile.o
+OBJS1=binfile.o cheaderfile.o csvfile.o datfile.o dspconio.o sigfile.o wavfile.o
 
 INC=-I.
 

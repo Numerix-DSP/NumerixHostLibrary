@@ -29,7 +29,7 @@ Description : .XMT file I/O routines
 * Function : xmt_read_data
 *
 * Parameters :
-*   double *BPtr,               - Output buffer pointer
+*   double *pData,               - Output buffer pointer
 *   FILE *FPtr,                 - File pointer
 *   const int BufLen
 *
@@ -41,7 +41,7 @@ Description : .XMT file I/O routines
 *
 ********************************************************/
 
-int xmt_read_data (double *BPtr,
+int xmt_read_data (double *pData,
     FILE *FPtr,
     const int BufLen)
 
@@ -60,7 +60,7 @@ int xmt_read_data (double *BPtr,
                 sscanf (p_char+7, "%d\"/>\n", &fpsample);
                 sample = (double)fpsample;
 //              printf("sample = %lf\n", sample);
-                *BPtr++ = sample;
+                *pData++ = sample;
                 SampleCount++;
             }
         }

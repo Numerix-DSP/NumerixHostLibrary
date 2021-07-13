@@ -11,12 +11,16 @@ double  *p_DataArray;
 
 WAV_FILE_INFO WavInfo;
 
+long xmt_read_data (double *BPtr,
+    FILE *FPtr,
+    const long BufLen);
+
 
 int main( int argc, char **argv )
 {
-    int     SampleCount;
+    long    sampleCount;
     FILE    *pInputFile, *pOutputFile;
-    int     TotalSampleCount = 0;
+    long    TotalsampleCount = 0;
 
     char    XmtFileName[80];
     char    WavFileName[80];
@@ -49,26 +53,26 @@ int main( int argc, char **argv )
 
     WavInfo = wav_set_info (atol (argv[2]), 0, 1, 16, 2, 1);
 
-    wav_write_header (pOutputFile, WavInfo);            // Write dummy header to output file
+    wav_write_header (pOutputFile, WavInfo);                // Write dummy header to output file
 
-    while ((SampleCount = xmt_read_data (p_DataArray, pInputFile, SAMPLE_SIZE)) != 0) { // Successively read arrays of 128 samples*/
-        for (int i = 0; i < SampleCount; i++) {         // Scale the data to 16 bit (from 32 bit)
+    while ((sampleCount = xmt_read_data (p_DataArray, pInputFile, SAMPLE_SIZE)) != 0) { // Successively read arrays of 128 samples*/
+        for (int i = 0; i < sampleCount; i++) {             // Scale the data to 16 bit (from 32 bit)
             *(p_DataArray+i) = *(p_DataArray+i) / (65536.);
         }
-        TotalSampleCount += SampleCount;
-        wav_write_data (p_DataArray, pOutputFile, WavInfo, SampleCount);
+        TotalsampleCount += sampleCount;
+        wav_write_data (p_DataArray, pOutputFile, WavInfo, sampleCount);
     }
-                                                        // Write last block of data
-    printf ("Total number of samples read = %d\n", TotalSampleCount);
+                                                            // Write last block of data
+    printf ("Total number of samples read = %d\n", TotalsampleCount);
 
-    WavInfo.NumberOfSamples = TotalSampleCount;         // Set total data length
-    rewind (pOutputFile);                               // Rewind pointer to start of file
-    wav_write_header (pOutputFile, WavInfo);            // Overwrite the header information
+    WavInfo.NumberOfSamples = TotalsampleCount;             // Set total data length
+    rewind (pOutputFile);                                   // Rewind pointer to start of file
+    wav_write_header (pOutputFile, WavInfo);                // Overwrite the header information
 
     fclose (pInputFile);
     fclose (pOutputFile);
 
-    free (p_DataArray);                                 // Free memory
+    free (p_DataArray);                                     // Free memory
 
     return (0);
 }

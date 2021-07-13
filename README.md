@@ -1,5 +1,8 @@
 # NumerixHostLibrary
-A library of host I/O routines, including full source code. Functions include console and File I/O, including .WAV files. These functions can be used on any OS (UNIX, Windows etc.) and also on any other embedded processor or DSP that supports console and file I/O via the debug environment. These functions can also be used with Gnuplot/C to run any of the SigLib example programs.
+A library of host I/O routines, including full source code. Functions include console and File I/O,
+including .WAV files. These functions can be used on any OS (UNIX, Windows etc.) and also on any
+other embedded processor or DSP that supports console and file I/O via the debug environment.
+These functions can also be used with Gnuplot/C to run any of the SigLib example programs.
 
 
 
@@ -7,9 +10,9 @@ A library of host I/O routines, including full source code. Functions include co
                Numerix Host Library
 
 
-                  Version 3.40
+                  Version 3.60
 
-                   04/08/2018
+                   13/07/2021
 
 
 
@@ -51,6 +54,10 @@ please tell us.
 
 
 CHANGE LOG
+
+V3.60       .h C/C++ header file write functions added
+
+V3.50       .bin file read/write functions added
 
 V3.40       .wav file read/write functions extended to support multi-channel
             .dat file read/write functions tidied up

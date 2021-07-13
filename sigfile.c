@@ -100,17 +100,17 @@ int sig_read_data (double *bp,
 * Function : sig_read_file
 *
 * Parameters :
-*   double *BPtr,          - Output buffer pointer
-*   const char *fileName   - File name
+*   double *pData,          - Output buffer pointer
+*   const char *fileName    - File name
 *
 * Return value :
-*   int    sample_count    - Number of samples read, -1 for file open error
+*   int    sample_count     - Number of samples read, -1 for file open error
 *
 * Description : Return the number of samples in the .sig file
 *
 ********************************************************/
 
-int sig_read_file (double *BPtr,
+int sig_read_file (double *pData,
     const char *fileName)
 {
     FILE *fp;
@@ -120,8 +120,8 @@ int sig_read_file (double *BPtr,
         return (-1);
     }
 
-    while (fscanf (fp, "%le\n", BPtr) != EOF) {
-        BPtr++;
+    while (fscanf (fp, "%le\n", pData) != EOF) {
+        pData++;
         sample_count++;
     }
 
@@ -135,7 +135,7 @@ int sig_read_file (double *BPtr,
 * Function : sig_write_file
 *
 * Parameters :
-*   double *BPtr,           - Output buffer pointer
+*   double *pData,          - Output buffer pointer
 *   const char *fileName,   - File name
 *   const int BufLen
 *
@@ -146,8 +146,8 @@ int sig_read_file (double *BPtr,
 *
 ********************************************************/
 
-int sig_write_file (const double *BPtr,
-    char *fileName,
+int sig_write_file (const double *pData,
+    const char *fileName,
     const int BufLen)
 {
     FILE *fp;
@@ -156,7 +156,7 @@ int sig_write_file (const double *BPtr,
         return (-1);
     }
 
-    sig_write_data (BPtr, fp, BufLen);
+    sig_write_data (pData, fp, BufLen);
 
     fclose (fp);
 

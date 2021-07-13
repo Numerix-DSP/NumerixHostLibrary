@@ -51,7 +51,8 @@ void bin_write_data (const double *bp,
 {
     int    i;
 
-    for (i = 0; i < buffer_length; i++) {
+    for (i = 0; i < buffer_length; i++)
+    {
         if ((endianMode == 'b') || (endianMode == 'b')) {
             fputc(((short)*bp >> 8) & 0xff, fp);
             fputc((short)*bp++ & 0xff, fp);
@@ -89,30 +90,33 @@ int bin_read_data (double *bp,
     const int buffer_length)
 
 {
-    int     i = 0;
-    int     sample_count = 0;
-    short   int_1, int_2, out_val;
+    int    i = 0, sample_count = 0;
+    short     int_1, int_2, out_val;
 
-    for (i = 0; ((i < buffer_length) && ((int_1 = fgetc(fp)) != EOF)); i++) {
+    for (i = 0; ((i < buffer_length) && ((int_1 = fgetc(fp)) != EOF)); i++)
+    {
         int_2 = fgetc(fp);
 
-        if (int_2 == EOF) {
+        if (int_2 == EOF)
             break;
-        }
 
-        if ((endianMode == 'b') || (endianMode == 'b')) {
+        if ((endianMode == 'b') || (endianMode == 'b'))
+        {
             out_val = (int_1 & 0xff) << 8;
             out_val |= (int_2 & 0xff);
         }
-        else {
+        else
+        {
             out_val = (int_2 & 0xff) << 8;
             out_val |= (int_1 & 0xff);
         }
-        *bp++ = (double)out_val;
-        sample_count++;
+        *bp++ = (double)out_val;;
     }
 
-    for (; (i < buffer_length); i++) {
+    sample_count = i;
+
+    for (; (i < buffer_length); i++)
+    {
         *bp++ = 0.0;
     }
 
