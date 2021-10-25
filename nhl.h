@@ -94,7 +94,7 @@ void wav_display_info (const WAV_FILE_INFO);
 WAV_FILE_INFO wav_set_info (const int, const int, const short, const short, const short, const short);
 int wav_file_length (const char *);
 WAV_FILE_INFO wav_read_file (double *, const char *);
-int wav_write_file (const double *, char *, const WAV_FILE_INFO, const int);
+int wav_write_file (const double *, const char *, const WAV_FILE_INFO, const int);
 int wav_write_file_scaled (const double *, char *, const WAV_FILE_INFO, const int);
 
 #ifdef __cplusplus                  // End of decl. for C++ program calls
