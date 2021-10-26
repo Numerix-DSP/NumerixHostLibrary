@@ -882,7 +882,7 @@ int wav_write_file (const double *pData,
 * Function : wav_write_file_scaled
 *
 * Parameters :
-*   double *pData,                   - Output buffer pointer
+*   double *pData,                  - Output buffer pointer
 *   const char *fileName,           - File name
 *   const WAV_FILE_INFO WavInfo,    - WAV file info struct
 *   const int BufLen
@@ -896,7 +896,7 @@ int wav_write_file (const double *pData,
 ********************************************************/
 
 int wav_write_file_scaled (const double *pData,
-    char *fileName,
+    const char *fileName,
     const WAV_FILE_INFO WavInfo,
     const int BufLen)
 {
